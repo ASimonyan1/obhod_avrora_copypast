@@ -65,7 +65,6 @@ for line in lines:
             toggle_cap()
             current_cap = want_cap
 
-        print(current_cap)
         keyboard.type(ch)
         time.sleep(CHAR_DELAY)
 
