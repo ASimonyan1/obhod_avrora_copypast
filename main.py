@@ -1,6 +1,5 @@
 import time
 import re
-from mmap import ACCESS_COPY
 
 from pynput.keyboard import Controller, Key
 
