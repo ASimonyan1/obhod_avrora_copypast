@@ -31,9 +31,26 @@ def toggle_layout():
 def is_russian(ch):
     return re.match(r"[А-Яа-яЁё]", ch) is not None
 
-for line in lines:
-    for ch in line:
+def press_key(key):
+    keyboard.press(key)
+    keyboard.release(key)
 
+def go_to_line_start():
+    # В некоторых редакторах первый Home ведёт к первому символу текста,
+    # а второй — в абсолютное начало строки
+    press_key(Key.home)
+    time.sleep(0.05)
+    press_key(Key.home)
+    time.sleep(0.05)
+
+first_line = True
+
+for line in lines:
+    if not first_line:
+        # После Enter жёстко возвращаемся в начало новой строки
+        go_to_line_start()
+
+    for ch in line:
         want_layout = "RU" if is_russian(ch) else "EN"
 
         if want_layout != current_layout:
@@ -43,8 +60,8 @@ for line in lines:
         keyboard.type(ch)
         time.sleep(CHAR_DELAY)
 
-    keyboard.press(Key.enter)
-    keyboard.release(Key.enter)
+    press_key(Key.enter)
     time.sleep(LINE_DELAY)
+    first_line = False
 
 print("Готово!")
